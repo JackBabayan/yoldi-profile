@@ -1,4 +1,5 @@
 .avatar {
+   position: relative;
   pointer-events: painted;
   position: relative;
   border-radius: 50%;
@@ -21,8 +22,6 @@
   }
 
   &.editable {
-    position: relative;
-    
     input {
       cursor: pointer;
       opacity: 0;

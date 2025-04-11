@@ -55,8 +55,8 @@ export const Avatar = ({
         <Image
           src={image}
           alt={alt}
-          width={size === 'big' ? 100 : 32}
-          height={size === 'big' ? 100 : 32}
+          width={size === 'big' ? 100 : 50}
+          height={size === 'big' ? 100 : 50}
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.style.display = 'none';
@@ -64,10 +64,12 @@ export const Avatar = ({
         />
       )}
 
+
       <div className={styles.placeholder}>
         {initial && !image && <span>{initial}</span>}
         {editable && <div className={styles.placeholderIcon}><PhotoIcon /></div>}
       </div>
+
 
       {editable && (
         <input

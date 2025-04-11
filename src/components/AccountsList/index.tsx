@@ -13,6 +13,9 @@ export const AccountsList = () => {
   if (isLoading) return <div className={'loading'}>Загрузка...</div>;
   if (error) return <div className={'error'}>Ошибка загрузки данных</div>;
 
+  console.log(users);
+  
+
   return (
     <ul className={styles.list}>
       {users && users.map((user) => (

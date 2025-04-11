@@ -13,6 +13,9 @@ export const Header = () => {
     const { user, isLoggedIn, winWidth, setWindowWidth } = useAuthStore();
     const [mounted, setMounted] = useState(false);
 
+    console.log(user?.image?.url);
+    
+
     useEffect(() => {
         setMounted(true);
 
@@ -59,7 +62,8 @@ export const Header = () => {
                         <Link href="/account" className={styles.profile}>
                             <span>{user.name}</span>
                             <Avatar
-                                src={user.image?.url}
+                                src={user?.image?.url}
+                                user={user}
                                 alt={user.name}
                                 initial={user.name.charAt(0)}
                                 editable={false}
