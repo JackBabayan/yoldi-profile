@@ -1,4 +1,5 @@
 .avatar {
+  pointer-events: painted;
   position: relative;
   border-radius: 50%;
   overflow: hidden;
@@ -8,23 +9,55 @@
   justify-content: center;
   text-transform: uppercase;
   border: 1px solid var(--border-color);
-  
+
   &.small {
     width: 50px;
     height: 50px;
   }
-  
+
   &.big {
     width: 100px;
     height: 100px;
   }
-  
+
   &.editable {
-    cursor: pointer;
+    position: relative;
+    
+    input {
+      cursor: pointer;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &:hover {
+    .placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: var(--primary-color);
+      font-weight: 500;
+
+      .placeholderIcon {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
   }
 }
 
 .placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,11 +66,24 @@
   color: var(--primary-color);
   font-weight: 500;
   font-size: 18px;
-  
+
+  .placeholderIcon {
+    opacity: 0;
+    visibility: hidden;
+    background-color: var(--primary-color);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    transition: all var(--trTime1) ease-in-out;
+  }
+
   .small & {
     font-size: var(--pL);
   }
-  
+
   .big & {
     font-size: var(--h1);
   }
@@ -57,12 +103,8 @@
   opacity: 0;
   transition: opacity 0.2s ease;
   cursor: pointer;
-  
+
   &.visible {
     opacity: 1;
   }
-}
-
-.fileInput {
-  display: none;
 }

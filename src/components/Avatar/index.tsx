@@ -1,83 +1,82 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { FiUser, FiUpload } from 'react-icons/fi';
+import { PhotoIcon } from '@/styles/icon';
+import { User } from '@/lib/types';
+import { updateProfile, uploadImage } from '@/lib/api';
+
 import styles from './styles.module.scss';
 
 interface AvatarProps {
-  src?: string;
+  user?: User;
+  src?: string | null;
   alt?: string;
   size?: 'small' | 'big';
   editable?: boolean;
   initial?: string;
-  onUpload?: (file: File) => void;
-}
+  onUpload?: (data: Partial<User>) => Promise<void>;
 
-export const Avatar = ({ 
-  src, 
-  alt = 'Avatar', 
+}
+export const Avatar = ({
+  user,
+  alt = 'Avatar',
   size = 'small',
   editable = false,
   initial,
   onUpload
 }: AvatarProps) => {
-  const [isHovered, setIsHovered] = useState(false);
-  
-  const isValidUrl = (url: string) => {
-    try {
-      new URL(url);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
-  
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0] && onUpload) {
-      onUpload(e.target.files[0]);
-    }
-  };
+  const [image, setImage] = useState<string | null>(user?.image?.url || null);
 
-  const hasValidImage = src && isValidUrl(src);
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || !e.target.files[0]) return;
+
+    const file = e.target.files[0];
+    if (!file.type.includes('image/')) return;
+
+    try {
+      const uploadedImage = await uploadImage(file);
+
+      const updatedUser = await updateProfile({
+        ...user,
+        imageId: uploadedImage.id,
+      });
+
+      setImage(uploadedImage.url);
+      onUpload?.(updatedUser);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    } finally {
+      e.target.value = '';
+    }
+  };
 
   return (
-    <div 
-      className={`${styles.avatar} ${styles[size]} ${editable ? styles.editable : ''}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {hasValidImage ? (
-        <Image 
-          src={src} 
-          alt={alt} 
-          width={size === 'big' ? 80 : 32} 
-          height={size === 'big' ? 80 : 32}
+    <div className={`${styles.avatar} ${styles[size]} ${editable ? styles.editable : ''}`}>
+      {image && (
+        <Image
+          src={image}
+          alt={alt}
+          width={size === 'big' ? 100 : 32}
+          height={size === 'big' ? 100 : 32}
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.style.display = 'none';
           }}
         />
-      ) : (
-        <div className={styles.placeholder}>
-          {initial ? initial : <FiUser />}
-        </div>
       )}
       
+      <div className={styles.placeholder}>
+        {initial && !image && <span>{initial}</span>}
+        <div className={styles.placeholderIcon}><PhotoIcon /></div>
+      </div>
+
       {editable && (
-        <>
-          <label 
-            className={`${styles.uploadOverlay} ${isHovered ? styles.visible : ''}`}
-            htmlFor="avatar-upload"
-          >
-            <FiUpload />
-          </label>
-          <input 
-            type="file" 
-            id="avatar-upload" 
-            accept="image/*" 
-            onChange={handleFileChange}
-            className={styles.fileInput}
-          />
-        </>
+        <input
+          type="file"
+          id="avatar-upload"
+          accept="image/*"
+          onChange={handleFileChange}
+          className={styles.fileInput}
+        />
       )}
     </div>
   );

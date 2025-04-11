@@ -61,9 +61,11 @@ export default function Account() {
       <div className={styles.profileContainer}>
         <div className={styles.profileHeader}>
           <Avatar
-            src={user.image}
-            alt={user.name}
+            src={user.image?.url || null}
+            alt={"Аватарка пользователя"}
             size="big"
+            editable
+            user={user}
             initial={user.name.charAt(0)}
           />
         </div>
