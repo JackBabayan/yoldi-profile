@@ -1,0 +1,80 @@
+.authFormContainer {
+  background-color: var(--background-color);
+  border-radius: var(--borderMd);
+  border: 1px solid var(--border-color);
+  padding: var(--m30);
+  width: 100%;
+  max-width: 400px;
+
+  .title {
+    font-size: var(--h1);
+    font-weight: 500;
+    margin-bottom: var(--m25);
+    font-family: 'Inter', sans-serif;
+    color: var(--primary-color);
+    line-height: var(--lineHeight);
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--m15);
+
+    .formGroup {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .inputWrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+
+      >svg {
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        left: 20px;
+        color: var(--grey-color);
+      }
+
+      .input {
+        width: 100%;
+        padding: 12px 55px;
+        border: 1px solid var(--grey-dark-color);
+        border-radius: var(--borderMd);
+        font-size: var(--pL);
+        transition: all var(--trTime1) ease-in-out;
+
+        &:focus {
+          outline: none;
+          border-color: var(--grey-color);
+        }
+
+        &.error {
+          border-color: var(--error-color);
+        }
+      }
+    }
+
+    .passwordToggle {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--grey-color);
+    }
+
+    .btnSubmit {
+      margin-top: var(--m10);
+    }
+
+    .errorMessage {
+      color: var(--error-color);
+      font-size: var(--pS);
+      margin-top: 4px;
+    }
+  }
+}

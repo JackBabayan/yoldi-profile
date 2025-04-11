@@ -1,0 +1,66 @@
+.avatar {
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--placeholder-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &.small {
+    width: 32px;
+    height: 32px;
+  }
+  
+  &.big {
+    width: 80px;
+    height: 80px;
+  }
+  
+  &.editable {
+    cursor: pointer;
+  }
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--grey-color);
+  font-weight: 500;
+  font-size: 18px;
+  
+  .small & {
+    font-size: 14px;
+  }
+  
+  .big & {
+    font-size: 32px;
+  }
+}
+
+.uploadOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+  
+  &.visible {
+    opacity: 1;
+  }
+}
+
+.fileInput {
+  display: none;
+}
