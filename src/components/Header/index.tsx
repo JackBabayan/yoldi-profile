@@ -62,6 +62,7 @@ export const Header = () => {
                                 src={user.image?.url}
                                 alt={user.name}
                                 initial={user.name.charAt(0)}
+                                editable={false}
                             />
                         </Link>
                     ) : (

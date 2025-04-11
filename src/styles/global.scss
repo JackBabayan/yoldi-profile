@@ -22,6 +22,10 @@ body {
     }
 }
 
+.pageWrapper{
+    padding-bottom: 100px;
+}
+
 .authPage {
     min-height: calc(100vh - 152px);
     display: flex;

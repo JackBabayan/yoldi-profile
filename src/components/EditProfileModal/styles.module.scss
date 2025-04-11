@@ -9,7 +9,6 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
   animation: fadeIn 0.2s ease-in-out;
 
   .modalOverlay {
@@ -54,15 +53,18 @@
     }
   }
   
-  @media (max-width: 576px) {
+  @media (max-width: 767px) {
+    position: initial;
+    background-color: var(--background-color);
+    top: 81px;
+    align-items: flex-start;
+
     .modalContent {
+      border: none;
       max-width: 100%;
-      max-height: 100vh;
-      border-radius: 0;
     }
-    
     .modalOverlay {
-      padding: 0;
+      display: none;
     }
   }
 }

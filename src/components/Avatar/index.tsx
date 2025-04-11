@@ -63,10 +63,10 @@ export const Avatar = ({
           }}
         />
       )}
-      
+
       <div className={styles.placeholder}>
         {initial && !image && <span>{initial}</span>}
-        <div className={styles.placeholderIcon}><PhotoIcon /></div>
+        {editable && <div className={styles.placeholderIcon}><PhotoIcon /></div>}
       </div>
 
       {editable && (
