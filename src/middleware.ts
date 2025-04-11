@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
   
   if (request.nextUrl.pathname.startsWith('/account') || 
-      request.nextUrl.pathname.startsWith('/accounts')) {
+      request.nextUrl.pathname.startsWith('/all-accounts')) {
     if (!token) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
@@ -20,5 +20,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/account/:path*', '/accounts/:path*', '/login', '/register']
+  matcher: ['/account/:path*', '/all-accounts/:path*', '/login', '/register']
 };
