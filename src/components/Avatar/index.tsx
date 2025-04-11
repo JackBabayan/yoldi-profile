@@ -22,11 +22,22 @@ export const Avatar = ({
 }: AvatarProps) => {
   const [isHovered, setIsHovered] = useState(false);
   
+  const isValidUrl = (url: string) => {
+    try {
+      new URL(url);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+  
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0] && onUpload) {
       onUpload(e.target.files[0]);
     }
   };
+
+  const hasValidImage = src && isValidUrl(src);
 
   return (
     <div 
@@ -34,8 +45,17 @@ export const Avatar = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {src ? (
-        <Image src={src} alt={alt} width={size === 'big' ? 80 : 32} height={size === 'big' ? 80 : 32} />
+      {hasValidImage ? (
+        <Image 
+          src={src} 
+          alt={alt} 
+          width={size === 'big' ? 80 : 32} 
+          height={size === 'big' ? 80 : 32}
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.style.display = 'none';
+          }}
+        />
       ) : (
         <div className={styles.placeholder}>
           {initial ? initial : <FiUser />}

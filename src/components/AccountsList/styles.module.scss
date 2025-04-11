@@ -1,0 +1,47 @@
+.list {
+  list-style: none;
+
+  .item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: var(--m20);
+
+    &:first-child {
+      border-top: 1px solid var(--border-color);
+    }
+  }
+
+  .userInfo {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    max-width: calc(100% - 70px);
+    overflow: hidden;
+
+  }
+
+  .userName {
+    font-size: var(--pL);
+    font-weight: 500;
+    line-height: var(--lineHeight);
+    max-width: 70%;
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+
+  .userEmail {
+    font-size: var(--pL);
+    color: var(--grey-color);
+    line-height: var(--lineHeight);
+  }
+
+  @media (max-width: 768px) {
+    .userInfo {
+      flex-direction: column;
+
+    }
+  }
+}

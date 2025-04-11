@@ -6,7 +6,7 @@
   padding: 6px 22px;
   min-height: 40px;
   border-radius: var(--borderMd);
-  font-size: var(--pL);
+  font-size: var(--pM);
   font-family: 'Inter', sans-serif;
   font-weight: 500;
   min-width: 114px;
@@ -14,6 +14,7 @@
   transition: all var(--trTime1) ease-in-out;
   border: none;
   cursor: pointer;
+  position: relative;
 
   &.primary {
     padding: 12px 22px;
@@ -35,5 +36,16 @@
       background: var(--grey-dark-color);
       cursor: not-allowed;
     }
+  }
+
+  input{
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    z-index: 22;
   }
 }

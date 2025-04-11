@@ -1,0 +1,49 @@
+.profileContainer {
+  position: relative;
+  z-index: 1;
+  max-width: var(--contentWidth);
+  margin: 0 auto;
+
+  .profileHeader {
+    transform: translateY(-50px);
+    margin-bottom: var(--m35);
+    height: 50px;
+    pointer-events: none;
+  }
+
+  .profileInfoCont {
+    .profileActions {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--m30);
+      gap: 10px;
+
+      .profileInfo {
+        h1 {
+          line-height: 1.4;
+          margin-bottom: 10px;
+        }
+
+        .userEmail {
+          color: var(--grey-color);
+        }
+      }
+
+    }
+
+    .userDescription {
+      max-width: 600px;
+      line-height: 1.6;
+      color: var(--primary-color);
+      margin-bottom: var(--m60);
+    }
+  }
+}
+
+
+
+
+
+
+
+@media (max-width: 480px) {}

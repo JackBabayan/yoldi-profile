@@ -7,12 +7,7 @@
   max-width: 400px;
 
   .title {
-    font-size: var(--h1);
-    font-weight: 500;
     margin-bottom: var(--m25);
-    font-family: 'Inter', sans-serif;
-    color: var(--primary-color);
-    line-height: var(--lineHeight);
   }
 
   .form {
@@ -42,9 +37,10 @@
       .input {
         width: 100%;
         padding: 12px 55px;
+        font-family: 'Inter', sans-serif;
         border: 1px solid var(--grey-dark-color);
         border-radius: var(--borderMd);
-        font-size: var(--pL);
+        font-size: var(--pM);
         transition: all var(--trTime1) ease-in-out;
 
         &:focus {
@@ -76,5 +72,10 @@
       font-size: var(--pS);
       margin-top: 4px;
     }
+  }
+
+  @media (max-width: 768px) {
+    border: none;
+    max-width: 100%;
   }
 }

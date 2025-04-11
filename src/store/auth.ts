@@ -21,31 +21,43 @@ interface AuthStore {
 export const useAuthStore = create<AuthStore>((set, get) => ({
   user: null,
   loading: false,
-  isLoggedIn: isAuthenticated(),
+  isLoggedIn: isClient ? isAuthenticated() : false,
   winWidth: isClient ? window.innerWidth : 0,
 
   setWindowWidth: (width) => set({ winWidth: width }),
 
   login: async (email, password) => {
     set({ loading: true });
-    const success = await handleLogin(email, password);
-    if (success) {
-      await get().fetchProfile();
-      set({ isLoggedIn: true });
+    try {
+      const success = await handleLogin(email, password);
+      if (success) {
+        await get().fetchProfile();
+        set({ isLoggedIn: true });
+      }
+      set({ loading: false });
+      return success;
+    } catch (error) {
+      set({ loading: false });
+      console.error('Login error:', error);
+      return false;
     }
-    set({ loading: false });
-    return success;
   },
   
   register: async (email, password, name) => {
     set({ loading: true });
-    const success = await handleRegister(email, password, name);
-    if (success) {
-      await get().fetchProfile();
-      set({ isLoggedIn: true });
+    try {
+      const success = await handleRegister(email, password, name);
+      if (success) {
+        await get().fetchProfile();
+        set({ isLoggedIn: true });
+      }
+      set({ loading: false });
+      return success;
+    } catch (error) {
+      set({ loading: false });
+      console.error('Registration error:', error);
+      return false;
     }
-    set({ loading: false });
-    return success;
   },
   
   logout: () => {
@@ -54,12 +66,15 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   },
   
   fetchProfile: async () => {
+    if (!isClient) return;
+    
     set({ loading: true });
     try {
       const user = await getProfile();
       set({ user });
     } catch (error) {
       console.error('Fetch profile error:', error);
+      set({ isLoggedIn: false });
     }
     set({ loading: false });
   },
@@ -69,9 +84,12 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     try {
       const updatedUser = await updateProfile(data);
       set({ user: updatedUser });
+      set({ loading: false });
+      return updatedUser;
     } catch (error) {
+      set({ loading: false });
       console.error('Update profile error:', error);
+      throw error;
     }
-    set({ loading: false });
   }
 }));

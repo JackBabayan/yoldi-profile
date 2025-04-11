@@ -10,17 +10,18 @@ interface EditProfileModalProps {
   isLoading: boolean;
 }
 
-export const EditProfileModal = ({ 
-  user, 
-  isOpen, 
-  onClose, 
-  onSubmit, 
-  isLoading 
+export const EditProfileModal = ({
+  user,
+  isOpen,
+  onClose,
+  onSubmit,
+  isLoading
 }: EditProfileModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className={styles.modalOverlay}>
+    <div className={styles.modalWrapper}>
+      <div className={styles.modalOverlay} onClick={onClose} />
       <div className={styles.modalContent}>
         <AccountForm
           user={user}

@@ -1,0 +1,29 @@
+.cover {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background-color: #f7f7f7;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+  button{
+    opacity: 0;
+  }
+  &:hover{
+    button{
+      opacity: 1;
+    }
+  }
+}
+
+.coverImage {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}

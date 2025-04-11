@@ -24,13 +24,13 @@ export default function Register() {
   };
 
   return (
-    <>
+    <div className='authPage'>
       {error && <ErrorsAlert error={error} />}
       <AuthForm
         type="register"
         onSubmit={handleSubmit}
         isLoading={loading}
       />
-    </>
+    </div>
   );
 }

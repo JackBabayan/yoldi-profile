@@ -22,13 +22,13 @@ export default function Login() {
   };
 
   return (
-    <>
+    <div className='authPage'>
       {error && <ErrorsAlert error={error}/>}
       <AuthForm 
         type="login" 
         onSubmit={handleSubmit} 
         isLoading={loading} 
       />
-    </>
+    </div>
   );
 }

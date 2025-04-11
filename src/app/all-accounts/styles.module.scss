@@ -1,0 +1,14 @@
+.accountContainer{
+  padding: var(--m50) 0;
+  max-width: 800px;
+  min-height: calc(100vh - 152px);
+  margin: 0 auto;
+
+  .pageTitle{
+    margin-bottom: var(--m30);
+  }
+
+  @media (max-width: 768px) {
+    padding: var(--m50) var(--m20);
+  }
+}

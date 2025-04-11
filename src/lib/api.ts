@@ -1,43 +1,29 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Cookies from 'js-cookie';
-import { User } from './types';
-
-const API_URL = 'https://frontend-test-api.yoldi.agency/api';
+import { AuthResponse, User, ApiErrorResponse } from './types';
 
 const api = axios.create({
-    baseURL: API_URL,
-    headers: {
-      'Content-Type': 'application/json',
-      'X-API-KEY': 'saro',  // Добавляем сюда ваш ключ API
-    },
-    withCredentials: true, 
-  });
-  
-  api.interceptors.request.use((config) => {
-    const token = Cookies.get('token');
-    console.log('Токен из куки:', token);
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  });
-
-
-  
-// Добавляем интерцептор для обработки ответов
-api.interceptors.response.use(
-  (response) => {
-    return response;
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://frontend-test-api.yoldi.agency/api/',
+  headers: {
+    'Content-Type': 'application/json',
   },
-  (error) => {
-    // Если получаем 401, значит токен истек или недействителен
-    if (error.response && error.response.status === 401) {
-      console.log('Токен недействителен, перенаправление на страницу входа');
-      
-      // Очищаем токен
+  withCredentials: true,
+});
+
+
+api.interceptors.request.use((config) => {
+  const token = Cookies.get('token');
+  if (token) {
+    config.headers['X-API-KEY'] = token
+  }
+  return config;
+}, (error) => Promise.reject(error));
+
+api.interceptors.response.use(
+  (response) => response,
+  (error: AxiosError<ApiErrorResponse>) => {
+    if (error.response?.status === 401) {
       Cookies.remove('token');
-      
-      // Перенаправляем на страницу входа (только на клиенте)
       if (typeof window !== 'undefined') {
         window.location.href = '/login';
       }
@@ -46,38 +32,73 @@ api.interceptors.response.use(
   }
 );
 
-export const login = async (email: string, password: string) => {
-    const response = await api.post('/auth/login', { email, password });
-    const token = response.data.value;
-  
-    console.log('Получен токен:', token);
-  
-    Cookies.set('token', token, { expires: 7 });
-  
-    return response.data;
-  };
-
-export const register = async (email: string, password: string, name: string) => {
-  const response = await api.post('/auth/sign-up', { email, password, name });
-  return response.data;
+export const login = async (email: string, password: string): Promise<AuthResponse> => {
+  try {
+    const { data } = await api.post<AuthResponse>('/auth/login', { email, password });
+    return data;
+  } catch (error) {
+    console.error('Login error:', error);
+    throw error;
+  }
 };
 
-export const getProfile = async () => {
-    const response = await api.get('/profile');
-    return response.data;
-  };
-
-export const updateProfile = async (data: Partial<User>) => {
-  const response = await api.patch('/profile', data);
-  return response.data;
+export const register = async (email: string, password: string, name: string): Promise<AuthResponse> => {
+  try {
+    const { data } = await api.post<AuthResponse>('/auth/sign-up', { 
+      email, 
+      password, 
+      name 
+    });
+    return data;
+  } catch (error) {
+    console.error('Registration error:', error);
+    throw error;
+  }
 };
 
-export const getUserBySlug = async (slug: string) => {
-  const response = await api.get(`/user/${slug}`);
-  return response.data;
+
+export const getProfile = async (): Promise<User> => {
+  try {
+    const { data } = await api.get<User>('/profile');
+    return data;
+  } catch (error) {
+    console.error('Fetch profile error:', error);
+    throw error;
+  }
 };
 
-export const getUsers = async () => {
-  const response = await api.get('/user');
-  return response.data;
+export const updateProfile = async (userData: Partial<User>): Promise<User> => {
+  try {
+    const { data } = await api.patch<User>('/profile', userData);
+    return data;
+  } catch (error) {
+    console.error('Update profile error:', error);
+    throw error;
+  }
 };
+
+
+export const uploadImage = async (file: File): Promise<{ id: string; url: string }> => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const { data } = await api.post('/image', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  return data;
+};
+
+export const getUsersList = async (): Promise<User[]> => {
+  try {
+    const { data } = await api.get<User[]>('/user');
+    return data;
+  } catch (error) {
+    console.error('Fetch users list error:', error);
+    throw error;
+  }
+};
+
+export { api };

@@ -25,7 +25,7 @@
     }
 
     .tagline {
-      font-size: var(--pL);
+      font-size: var(--pM);
       color: var(--primary-color);
       font-family: 'Inter', sans-serif;
       line-height: var(--lineHeight);
@@ -41,22 +41,10 @@
       align-items: center;
       gap: var(--m20);
 
-      font-size: var(--pL);
+      font-size: var(--pM);
       color: var(--primary-color);
       font-family: 'Inter', sans-serif;
       line-height: var(--lineHeight);
-
-      .avatar {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--secondary-color);
-        border: 1px solid var(--border-color);
-      }
     }
   }
 }

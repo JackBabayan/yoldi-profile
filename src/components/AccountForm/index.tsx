@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { User } from '@/lib/types';
 import Button from '@/components/Buttons';
 
-import styles from '@/styles/AccountForm.module.scss';
+import styles from './styles.module.scss';
 
 interface AccountFormProps {
   user: User;
@@ -12,19 +12,23 @@ interface AccountFormProps {
 }
 
 export const AccountForm = ({ user, onSubmit, onCancel, isLoading = false }: AccountFormProps) => {
+
   const [formData, setFormData] = useState({
     name: user.name || '',
-    description: user.description || ''
+    description: user.description || '',
+    slug: ''
   });
   const [errors, setErrors] = useState({
     name: '',
-    description: ''
+    description: '',
+    slug: ''
   });
 
   useEffect(() => {
     setFormData({
       name: user.name || '',
-      description: user.description || ''
+      description: user.description || '',
+      slug: user.slug || ''
     });
   }, [user]);
 
@@ -45,7 +49,6 @@ export const AccountForm = ({ user, onSubmit, onCancel, isLoading = false }: Acc
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Очищаем ошибку при вводе
     if (errors[name as keyof typeof errors]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -60,7 +63,7 @@ export const AccountForm = ({ user, onSubmit, onCancel, isLoading = false }: Acc
 
   return (
     <div className={styles.formContainer}>
-      <h2 className={styles.title}>Редактировать профиль</h2>
+      <h1 className={styles.title}>Редактировать профиль</h1>
 
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
@@ -79,12 +82,12 @@ export const AccountForm = ({ user, onSubmit, onCancel, isLoading = false }: Acc
         <div className={styles.formGroup}>
           <label className={styles.label}>Адрес профиля</label>
           <div className={styles.slugWrapper}>
-            <span className={styles.slugPrefix}>yoldi.agency/</span>
+            <span className={styles.slugPrefix}>example.com/</span>
             <input
+              onChange={handleChange}
               type="text"
               name="slug"
-              value={user.slug || ''}
-              disabled
+              value={formData.slug}
               className={styles.input}
             />
           </div>
@@ -105,7 +108,7 @@ export const AccountForm = ({ user, onSubmit, onCancel, isLoading = false }: Acc
         <div className={styles.formActions}>
           <Button
             type="button"
-            variant={'primary'}
+            variant={'secondary'}
             onClick={onCancel}
           >
             Отмена

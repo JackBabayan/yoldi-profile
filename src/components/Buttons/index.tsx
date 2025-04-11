@@ -4,7 +4,7 @@ import Link from 'next/link';
 import styles from './styles.module.scss'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'icon';
+  variant?: 'primary' | 'secondary';
   children: ReactNode;
   href?: string | null | undefined
 }
