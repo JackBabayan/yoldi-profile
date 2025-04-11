@@ -34,7 +34,7 @@ export const Cover = ({user, onSubmit}: CoverProps) => {
 
       const updatedUser = await updateProfile({
         ...user,
-        cover: uploadedImage,
+        coverId: uploadedImage.id,
       });
 
       setImage(uploadedImage.url);
@@ -56,7 +56,7 @@ export const Cover = ({user, onSubmit}: CoverProps) => {
         description: user.description,
         slug: user.slug,
         image: user.image,
-        cover: undefined
+        coverId: null
       });
       setImage(null); 
       onSubmit(updatedUser);

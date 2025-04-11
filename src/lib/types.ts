@@ -10,6 +10,8 @@ export interface User {
     width: string,
     height: string
   };
+  coverId:string | null;
+  imageId:string | null;
   image?: {
     id: string,
     url: string,

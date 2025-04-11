@@ -15,7 +15,7 @@ interface AuthStore {
   register: (email: string, password: string, name: string) => Promise<boolean>;
   logout: () => void;
   fetchProfile: () => Promise<void>;
-  updateProfile: (data: Partial<User>) => Promise<void>;
+  updateProfile: (data: Partial<User>) => Promise<User>;
 }
 
 export const useAuthStore = create<AuthStore>((set, get) => ({

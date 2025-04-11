@@ -66,6 +66,9 @@ a {
 
 
 .loading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: var(--pL);
     font-weight: 500;
     font-family: 'Inter', sans-serif;
@@ -75,6 +78,9 @@ a {
 }
 
 .error{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: var(--pL);
     font-weight: 500;
     font-family: 'Inter', sans-serif;

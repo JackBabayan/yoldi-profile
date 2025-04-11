@@ -32,20 +32,6 @@ export const AccountForm = ({ user, onSubmit, onCancel, isLoading = false }: Acc
     });
   }, [user]);
 
-  const validateForm = () => {
-    const newErrors = {
-      name: '',
-      description: ''
-    };
-
-    if (!formData.name.trim()) {
-      newErrors.name = 'Имя обязательно';
-    }
-
-    setErrors(newErrors);
-    return !Object.values(newErrors).some(error => error);
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -56,9 +42,7 @@ export const AccountForm = ({ user, onSubmit, onCancel, isLoading = false }: Acc
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      onSubmit(formData);
-    }
+    onSubmit(formData);
   };
 
   return (
