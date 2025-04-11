@@ -28,7 +28,6 @@ export const Cover = ({user, onSubmit}: CoverProps) => {
 
     try {
       setIsLoading(true);
-      // Загрузка изображения на сервер
       const uploadedImage = await uploadImage(file);
 
 
