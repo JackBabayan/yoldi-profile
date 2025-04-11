@@ -38,6 +38,14 @@
       margin-bottom: var(--m60);
     }
   }
+  @media (max-width: 768px) {
+    padding: 0 var(--m30);
+    .profileInfoCont {
+      .profileActions {
+        flex-direction: column;
+      }
+    }
+  }
 }
 
 
@@ -45,5 +53,3 @@
 
 
 
-
-@media (max-width: 480px) {}
