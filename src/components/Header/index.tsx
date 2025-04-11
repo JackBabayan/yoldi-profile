@@ -12,8 +12,6 @@ import styles from './styles.module.scss';
 export const Header = () => {
     const { user, isLoggedIn, winWidth, setWindowWidth } = useAuthStore();
     const [mounted, setMounted] = useState(false);
-
-    console.log(user?.image?.url);
     
 
     useEffect(() => {

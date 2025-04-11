@@ -5,16 +5,16 @@ import Image from 'next/image';
 import { ImgIcon, UploadIcon, RemoveIcon } from '@/styles/icon';
 import Button from '@/components/Buttons';
 import { User } from '@/lib/types';
-import { updateProfile , uploadImage} from '@/lib/api';
+import { updateProfile, uploadImage } from '@/lib/api';
 
 import styles from './styles.module.scss';
 
 interface CoverProps {
   user: User;
-  onSubmit: (data: Partial<User>) => Promise<void>;
+  onSubmit?: (data: Partial<User>) => Promise<void>;
 }
 
-export const Cover = ({user, onSubmit}: CoverProps) => {
+export const Cover = ({ user, onSubmit }: CoverProps) => {
   const [image, setImage] = useState<string | null>(user?.cover?.url || null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,14 +30,16 @@ export const Cover = ({user, onSubmit}: CoverProps) => {
       setIsLoading(true);
       const uploadedImage = await uploadImage(file);
 
-
       const updatedUser = await updateProfile({
         ...user,
         coverId: uploadedImage.id,
       });
 
       setImage(uploadedImage.url);
-      onSubmit(updatedUser);
+
+      if (onSubmit) {
+        await onSubmit(updatedUser);
+      }
     } catch (error) {
       console.error('Error uploading cover:', error);
     } finally {
@@ -49,16 +51,20 @@ export const Cover = ({user, onSubmit}: CoverProps) => {
   const handleDeleteCover = async () => {
     try {
       setIsLoading(true);
-      const updatedUser = await updateProfile({ 
+      const updatedUser = await updateProfile({
         name: user.name,
         email: user.email,
         description: user.description,
         slug: user.slug,
         image: user.image,
-        coverId: null
+        coverId: null,
       });
-      setImage(null); 
-      onSubmit(updatedUser);
+
+      setImage(null);
+
+      if (onSubmit) {
+        await onSubmit(updatedUser);
+      }
     } catch (error) {
       console.error('Error deleting cover:', error);
     } finally {
@@ -79,34 +85,32 @@ export const Cover = ({user, onSubmit}: CoverProps) => {
         </div>
       )}
 
-      {image ? (
-        <Button
-          variant={'secondary'}
-          onClick={handleDeleteCover}
-          disabled={isLoading}
-        >
-          <RemoveIcon />
-          {isLoading ? 'Удаление...' : 'Удалить'}
-          <ImgIcon />
-        </Button>
-      ) : (
-        <Button
-          variant={'secondary'}
-          disabled={isLoading}
-        >
-          <UploadIcon />
-          {isLoading ? 'Загрузка...' : 'Загрузить'}
-          <ImgIcon />
-          <input
-            type="file"
-            id="cover-upload"
-            accept="image/*"
-            onChange={handleFileChange}
-            className={styles.fileInput}
+      {onSubmit &&
+        (image ? (
+          <Button
+            variant="secondary"
+            onClick={handleDeleteCover}
             disabled={isLoading}
-          />
-        </Button>
-      )}
+          >
+            <RemoveIcon />
+            {isLoading ? 'Удаление...' : 'Удалить'}
+            <ImgIcon />
+          </Button>
+        ) : (
+          <Button variant="secondary" disabled={isLoading}>
+            <UploadIcon />
+            {isLoading ? 'Загрузка...' : 'Загрузить'}
+            <ImgIcon />
+            <input
+              type="file"
+              id="cover-upload"
+              accept="image/*"
+              onChange={handleFileChange}
+              className={styles.fileInput}
+              disabled={isLoading}
+            />
+          </Button>
+        ))}
     </div>
   );
 };

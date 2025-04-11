@@ -101,4 +101,14 @@ export const getUsersList = async (): Promise<User[]> => {
   }
 };
 
+export const getUserBySlug = async (slug: string): Promise<User> => {
+  try {
+    const { data } = await api.get<User>(`/user/${slug}`);
+    return data;
+  } catch (error) {
+    console.error('Fetch user error:', error);
+    throw error;
+  }
+};
+
 export { api };
