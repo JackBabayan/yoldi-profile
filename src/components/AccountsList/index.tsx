@@ -1,5 +1,6 @@
 import useSWR from 'swr';
 import { getUsersList } from '@/lib/api';
+import { Loader } from '@/components/Loader';
 import { Avatar } from '@/components/Avatar';
 import { User } from '@/lib/types';
 import Link from 'next/link';
@@ -12,10 +13,8 @@ export const AccountsList = () => {
     () => getUsersList()
   );
 
-  if (isLoading) return <div className={'loading'}>Загрузка...</div>;
+  if (isLoading) return <Loader />
   if (error) return <div className={'error'}>Ошибка загрузки данных</div>;
-
-  console.log(users);
 
 
   return (

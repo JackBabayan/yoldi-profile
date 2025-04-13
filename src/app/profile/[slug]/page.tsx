@@ -5,6 +5,8 @@ import { User } from '@/lib/types';
 import { Avatar } from '@/components/Avatar';
 import { getUserBySlug } from '@/lib/api';
 import { Cover } from '@/components/Cover';
+import { Loader } from '@/components/Loader';
+
 
 import styles from './styles.module.scss';
 
@@ -13,8 +15,6 @@ export default function ProfilePage({ params }: { params: Promise<{ slug: string
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  console.log(user);
-  
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -31,7 +31,7 @@ export default function ProfilePage({ params }: { params: Promise<{ slug: string
     fetchUser();
   }, [slug]);
 
-  if (loading) return <div className={'loading'}>Загрузка...</div>;
+  if (loading || !user) return <Loader />
 
   if (!user) {
     return <div className={'error'}>Пользователь не найден</div>;

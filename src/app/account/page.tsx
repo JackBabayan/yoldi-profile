@@ -5,11 +5,12 @@ import { Avatar } from '@/components/Avatar';
 import { Cover } from '@/components/Cover';
 import { EditProfileModal } from '@/components/EditProfileModal';
 import Button from '@/components/Buttons';
+import { Loader } from '@/components/Loader';
 import { useAuthStore } from '@/store/auth';
 import { useRouter } from 'next/navigation';
-import { EditIcon, LogoutIcon } from '@/styles/icon';
-
 import { User } from '@/lib/types';
+
+import { EditIcon, LogoutIcon } from '@/styles/icon';
 import styles from './styles.module.scss';
 
 export default function Account() {
@@ -47,8 +48,7 @@ export default function Account() {
   };
 
 
-
-  if (loading || !user) return <div className={'loading'}>Загрузка...</div>;
+  if (loading || !user) return <Loader />
 
 
   return (

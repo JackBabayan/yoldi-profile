@@ -68,19 +68,6 @@ a {
     }
 }
 
-
-.loading{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--pL);
-    font-weight: 500;
-    font-family: 'Inter', sans-serif;
-    color: var(--primary-color);
-    line-height: var(--lineHeight);
-    min-height: 200px;
-}
-
 .error{
     display: flex;
     align-items: center;

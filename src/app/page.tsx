@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/auth';
+import {Loader} from '@/components/Loader';
 
 export default function Home() {
   const router = useRouter();
@@ -16,5 +17,6 @@ export default function Home() {
     }
   }, [isLoggedIn, router]);
 
-  return null;
+  return  <Loader />
+
 }
