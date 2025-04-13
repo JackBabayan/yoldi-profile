@@ -58,7 +58,7 @@ export default function ProfilePage({ params }: { params: Promise<{ slug: string
           <div className={styles.profileActions}>
             <div className={styles.profileInfo}>
               <h1 className={styles.userName}>{user.name}</h1>
-              <span className={styles.userEmail}>{user.email}</span>
+              <span className={styles.userEmail}>{user.slug}</span>
             </div>
           </div>
 
