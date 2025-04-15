@@ -89,6 +89,7 @@ export const AuthForm = ({ type, onSubmit, isLoading = false }: AuthFormProps) =
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Имя"
+                autoComplete="name"
                 className={`${styles.input} ${errors.name ? styles.error : ''}`}
               />
             </div>
@@ -104,6 +105,7 @@ export const AuthForm = ({ type, onSubmit, isLoading = false }: AuthFormProps) =
               name="email"
               value={formData.email}
               onChange={handleChange}
+              autoComplete="email"
               placeholder="E-mail"
               className={`${styles.input} ${errors.email ? styles.error : ''}`}
             />
@@ -120,10 +122,12 @@ export const AuthForm = ({ type, onSubmit, isLoading = false }: AuthFormProps) =
               value={formData.password}
               onChange={handleChange}
               placeholder="Пароль"
+              autoComplete="password"
               className={`${styles.input} ${errors.password ? styles.error : ''}`}
             />
             <button
               type="button"
+              aria-label="Show password"
               className={styles.passwordToggle}
               onClick={() => setShowPassword(!showPassword)}
             >
